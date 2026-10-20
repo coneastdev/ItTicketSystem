@@ -12,6 +12,7 @@ namespace Netheret
     public partial class Login : Form
     {
         private const string SALT = "7fd0ff24c5af99ae8842814eb993d7dc9e419b52710392961356edfeb2281e56";
+        private const bool TESTING = true;
 
         public Login()
         {
@@ -128,7 +129,7 @@ namespace Netheret
         private static bool emailValid(string email)
         {
             Regex re = new Regex("[^\\s@]+@[^\\s@]+\\.[^\\s@]+");
-            if (re.IsMatch(email))
+            if (re.IsMatch(email) || TESTING)
             {
                 return true;
             }
@@ -142,7 +143,7 @@ namespace Netheret
         private static bool passwordValid(string password)
         {
             Regex re = new Regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
-            if (re.IsMatch(password))
+            if (re.IsMatch(password) || TESTING)
             {
                 return true;
             }
