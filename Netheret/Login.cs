@@ -215,6 +215,7 @@ namespace Netheret
                             if (add_user(email, password) == true)
                             {
                                 Debug.WriteLine("Users added");
+                                button1_Click(sender, e);
                             }
                             else
                             {
