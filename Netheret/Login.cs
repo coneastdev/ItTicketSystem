@@ -11,6 +11,8 @@ namespace Netheret
 {
     public partial class Login : Form
     {
+        private const string SALT = "7fd0ff24c5af99ae8842814eb993d7dc9e419b52710392961356edfeb2281e56";
+
         public Login()
         {
             InitializeComponent();
@@ -47,6 +49,7 @@ namespace Netheret
 
         private static string check_user_data(string email, string password)
         {
+            
             try
             {
                 using var connection = new SqliteConnection("Data Source=database.db");
@@ -67,7 +70,7 @@ namespace Netheret
                     {
                         // Note: column indexes start at 0. If password is your 3rd column, use reader.GetString(2)
                         var dbPassword = reader.GetString(2);
-                        var userPassword = compute_hash(password + email);
+                        var userPassword = compute_hash(password + email + SALT);
 
                         if (userPassword == dbPassword)
                         {
@@ -106,7 +109,7 @@ namespace Netheret
                     {
                         // Add parameters properly using AddWithValue
                         command.Parameters.AddWithValue("@email", email);
-                        command.Parameters.AddWithValue("@password", compute_hash(password + email));
+                        command.Parameters.AddWithValue("@password", compute_hash(password + email + SALT));
 
                         command.ExecuteNonQuery();
                     }
